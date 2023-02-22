@@ -52,7 +52,7 @@ const char* value = ptree_get_value(tree, "my key")
 
 ### Realeasing the memory
 
-Once you have finished with your tree, you have to free it with the method `ptree_free`, which takes the adress of the pointer on the tree.
+Once you have finished with your tree, you have to free it with the method `ptree_free`, which takes the address of the pointer on the tree.
 
 ```c
 ptree_free(&tree);
