@@ -42,13 +42,27 @@ Finally, we store this pair of values in the tree with the `ptree_push` method.
 ptree_push(tree);
 ```
 
-### Accessing datas
+### Abort pre-filled data
+
+If you realise will parsing that the datas the datas you have started to create are garbage (for example if you have a key but not his value), you can abort precedents operations before push.
+```c
+ptree_abort(tree);
+```
+
+### Accessing data
 
 We can access a data with the method `ptree_get_value`, that search in the tree in O(log(N)).
 ```c
 const char* value = ptree_get_value(tree, "my key")
 ```
 **Warning !** If you have to modify the string returned, copy it in a new buffer or the value will be edited in the tree.
+
+### Display datas
+
+For debug purpose, you can display all the datas in the tree with the `ptree_display` method.
+```c
+ptree_display(tree);
+```
 
 ### Realeasing the memory
 

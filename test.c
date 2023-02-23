@@ -16,9 +16,7 @@ int main()
     ptree_update_value(tree, "ue 2");
     ptree_push(tree);
 
-    printf("%s\n", ptree_get_value(tree, "my key 1"));
-
-    printf("%s\n", ptree_get_value(tree, "my key 2"));
+    ptree_display(tree);
 
     ptree_free(&tree);
 

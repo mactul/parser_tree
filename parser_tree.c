@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "parser_tree.h"
 
 typedef struct _tree_node {
@@ -74,6 +75,16 @@ char ptree_update_value(ParserTree* tree, const char* partial_value)
     return 1;
 }
 
+void ptree_abort(ParserTree* tree)
+{
+    if(tree->current_key != NULL)
+        free(tree->current_key);
+    if(tree->current_value != NULL)
+        free(tree->current_value);
+    tree->current_key = NULL;
+    tree->current_value = NULL;
+}
+
 char ptree_push(ParserTree* tree)
 {
     TreeNode* node = (TreeNode*) malloc(sizeof(TreeNode));
@@ -97,7 +108,7 @@ char ptree_push(ParserTree* tree)
 
     while(root != NULL)
     {
-        int cmp = strcmp(node->key, root->key);
+        int cmp = stricmp(node->key, root->key);
         if(cmp == 0)
         {
             // The key already exists, just replace the value
@@ -133,7 +144,7 @@ const char* ptree_get_value(ParserTree* tree, char* key)
     TreeNode* root = tree->root;
     while(root != NULL)
     {
-        int cmp = strcmp(key, root->key);
+        int cmp = stricmp(key, root->key);
         if(cmp == 0)
         {
             return root->value;
@@ -178,3 +189,22 @@ void ptree_free(ParserTree** tree)
         *tree = NULL;
     }
 }
+
+void _ptree_display(TreeNode* root)
+{
+    if(root->left_child != NULL)
+        _ptree_display(root->left_child);
+    if(root->right_child != NULL)
+        _ptree_display(root->right_child);
+    
+    if(root->key != NULL)
+        printf("KEY: %s\n", root->key);
+    if(root->value != NULL)
+        printf("VALUE: %s\n\n", root->value);
+}
+
+void ptree_display(ParserTree* tree)
+{
+    _ptree_display(tree->root);
+}
+
